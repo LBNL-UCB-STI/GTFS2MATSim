@@ -114,7 +114,7 @@ public class RunGTFS2MATSim {
 			GtfsConverter converter = GtfsConverter.newBuilder().setFeed(feed).setScenario(scenario).setTransform(coordinateTransformation).setUseExtendedRouteTypes(false).setStartDate(startDate).setEndDate(endDate).build();
 			converter.convert();
 			if (createNetworkAndVehicles) {
-				(new CreatePseudoNetwork(scenario.getTransitSchedule(), scenario.getNetwork(), "pt_")).createNetwork();
+				(new CreatePseudoNetwork(scenario.getTransitSchedule(), scenario.getNetwork(), "")).createNetwork();
 				(new CreateVehiclesForSchedule(scenario.getTransitSchedule(), scenario.getTransitVehicles())).run();
 			}
 

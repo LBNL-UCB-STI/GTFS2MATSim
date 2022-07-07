@@ -51,16 +51,19 @@ public final class RunGTFS2MATSimExample {
 	
 		//this was tested for the latest VBB GTFS, available at 
 		// http://www.vbb.de/de/article/fahrplan/webservices/datensaetze/1186967.html
-		
+
+		String gtfsZipFile = args[0]; // gtfs zip file location
+		String scenarioCRS = args[1]; // CRS [ex. EPSG:26910]
+		String outputDir = args[2]; // output directory
+
 		//input data
-		String gtfsZipFile = "";
-		CoordinateTransformation ct = TransformationFactory.getCoordinateTransformation(TransformationFactory.WGS84, "EPSG:25833");
+		CoordinateTransformation ct = TransformationFactory.getCoordinateTransformation(TransformationFactory.WGS84, scenarioCRS);
 		LocalDate date = LocalDate.parse("2020-06-25");
 
 		//output files 
-		String scheduleFile = "transitSchedule.xml.gz";
-		String networkFile = "network.xml.gz";
-		String transitVehiclesFile ="transitVehicles.xml.gz";
+		String scheduleFile = outputDir + "/transitSchedule.xml.gz";
+		String networkFile = outputDir + "/network.xml.gz";
+		String transitVehiclesFile = outputDir + "/transitVehicles.xml.gz";
 		Scenario scenario = ScenarioUtils.createScenario(ConfigUtils.createConfig());
 
 		//Convert GTFS
