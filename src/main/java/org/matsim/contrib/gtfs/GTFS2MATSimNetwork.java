@@ -42,28 +42,21 @@ import org.matsim.vehicles.VehicleWriterV1;
  * This is an example script that utilizes GTFS2MATSim and creates a pseudo network and vehicles using MATSim standard API functionality.
  */
 
-public final class RunGTFS2MATSimExample {
-
-	private RunGTFS2MATSimExample() {
-	}
+public final class GTFS2MATSimNetwork {
 
 	public static void main(String[] args) {
 	
 		//this was tested for the latest VBB GTFS, available at 
 		// http://www.vbb.de/de/article/fahrplan/webservices/datensaetze/1186967.html
-
 		String gtfsZipFile = args[0]; // gtfs zip file location
 		String scenarioCRS = args[1]; // CRS [ex. EPSG:26910]
-		String outputDir = args[2]; // output directory
 
 		//input data
 		CoordinateTransformation ct = TransformationFactory.getCoordinateTransformation(TransformationFactory.WGS84, scenarioCRS);
 		LocalDate date = LocalDate.parse("2020-06-25");
 
-		//output files 
-		String scheduleFile = outputDir + "/transitSchedule.xml.gz";
-		String networkFile = outputDir + "/network.xml.gz";
-		String transitVehiclesFile = outputDir + "/transitVehicles.xml.gz";
+		//output files
+		String networkFile = "network.xml";
 		Scenario scenario = ScenarioUtils.createScenario(ConfigUtils.createConfig());
 
 		//Convert GTFS
@@ -71,7 +64,8 @@ public final class RunGTFS2MATSimExample {
 
 		//Write out network, vehicles and schedule
 		new NetworkWriter(scenario.getNetwork()).write(networkFile);
-		new TransitScheduleWriter(scenario.getTransitSchedule()).writeFile(scheduleFile);
-		new MatsimVehicleWriter(scenario.getTransitVehicles()).writeFile(transitVehiclesFile);
+
+		// TODO doesn't exit gracefully after writing network file.
+		System.exit(0);
 	}
 }
